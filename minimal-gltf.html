@@ -58,17 +58,9 @@
         scene.add(axis);
 
 
-        // Instantiate a loader
-        let loader = new THREE.GLTFLoader();
-        let mixer;
-        var clock = new THREE.Clock();
-
-
-
         function animate() {
 
             requestAnimationFrame(animate);
-            if (mixer) mixer.update(clock.getDelta());
             renderer.render(scene, camera);
 
         }
@@ -83,27 +75,25 @@
 
 
 
+        // Instantiate a loader
+        let loader = new THREE.GLTFLoader();
+
         // Load a glTF resource
         loader.load(
             // resource URL
-            'assets/simple-animation.gltf',
+            'assets/minimal.gltf',
 
             // called when the resource is loaded
             function (gltf) {
 
-                console.log(gltf);
-
                 scene.add(gltf.scene);
 
-                mixer = new THREE.AnimationMixer(gltf.scene);
-                let clip = gltf.animations[0];
-                let action = mixer.clipAction(clip);
-                action.play();
+                console.log(gltf);
 
                 // gltf.animations; // Array<THREE.AnimationClip>
-                // gltf.scene;      // THREE.Scene
-                // gltf.scenes;     // Array<THREE.Scene>
-                // gltf.cameras;    // Array<THREE.Camera>
+                // gltf.scene; // THREE.Scene
+                // gltf.scenes; // Array<THREE.Scene>
+                // gltf.cameras; // Array<THREE.Camera>
 
             },
 
