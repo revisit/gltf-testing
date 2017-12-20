@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Simple glTF 2.0 Test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body { margin: 0; }
+        #container {
+            position: absolute;
+            top: 0px;
+            width:100%;
+            height:100%;
+            z-index: -1;
+        }
+</style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="/js/detector.js"></script>
+    <script src="/js/three.js"></script>
+    <script src="/js/OrbitControls.js"></script>
+    <script src="/js/GLTFLoader.js"></script>
+
+    <script>
+        let scene = new THREE.Scene();
+
+        let fov_deg   = 75,
+            width     = window.innerWidth,
+            height    = window.innerHeight,
+            near_clip = 0.1,
+            far_clip  = 1000,
+            aspect_ratio  = width / height;
+        let camera = new THREE.PerspectiveCamera(fov_deg, aspect_ratio, near_clip, far_clip);
+        camera.position.z = 5;
+
+        let renderer = new THREE.WebGLRenderer();
+        renderer.setSize(width, height);
+
+        let container_id = "container";
+        document.getElementById(container_id).appendChild(renderer.domElement);
+
+        let geometry = new THREE.BoxGeometry(1, 1, 1);
+        let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        let cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            cube.rotation.x += 0.1;
+            cube.rotation.y += 0.1;
+
+            renderer.render(scene, camera);
+        }
+
+        if (Detector.webgl) {
+            // Initiate function or other initializations here
+            animate();
+        } else {
+            var warning = Detector.getWebGLErrorMessage();
+            document.getElementById(container_id).appendChild(warning);
+        }
+
+    </script>
+
+</body>
+</html>
